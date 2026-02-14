@@ -185,7 +185,7 @@ class _EqualizerScreenState extends State<EqualizerScreen> {
 
   Widget _buildBandSlider(int index, String frequency, ColorScheme colorScheme) {
     final value = _bandLevels[index];
-    final normalizedValue = ((value + 1.0) / 2.0) * 100; // Convert -1.0 to 1.0 => 0 to 100
+    final normalizedValue = ((value + 1.0) / 2.0) * 100; // Normalize from range -1.0 to 1.0 into 0 to 100 for slider display
     
     return Expanded(
       child: Column(
