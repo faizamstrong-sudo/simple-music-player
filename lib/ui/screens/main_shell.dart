@@ -8,6 +8,7 @@ import 'search_screen.dart';
 import 'playlist_screen.dart';
 import 'player_screen.dart';
 import 'equalizer_screen.dart';
+import 'deezer_search_screen.dart';
 
 class MainShell extends ConsumerStatefulWidget {
   const MainShell({super.key});
@@ -49,6 +50,15 @@ class _MainShellState extends ConsumerState<MainShell> {
     );
   }
 
+  void _openDeezerSearch() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const DeezerSearchScreen(),
+      ),
+    );
+  }
+
   void _showSettingsMenu() {
     final themeState = ref.read(themeProvider);
     
@@ -60,6 +70,15 @@ class _MainShellState extends ConsumerState<MainShell> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
+              ListTile(
+                leading: const Icon(Icons.music_note),
+                title: const Text('Deezer Search'),
+                subtitle: const Text('Search dari Deezer'),
+                onTap: () {
+                  Navigator.pop(context);
+                  _openDeezerSearch();
+                },
+              ),
               ListTile(
                 leading: const Icon(Icons.equalizer),
                 title: const Text('Equalizer'),
