@@ -72,7 +72,8 @@ class LyricsService {
       if (match != null) {
         final minutes = int.parse(match.group(1)!);
         final seconds = int.parse(match.group(2)!);
-        final milliseconds = int.parse(match.group(3)!.padRight(3, '0'));
+        // Pad left to ensure 050 not 500 for 2-digit milliseconds
+        final milliseconds = int.parse(match.group(3)!.padLeft(3, '0'));
         final text = match.group(4)!.trim();
         
         final timestamp = Duration(

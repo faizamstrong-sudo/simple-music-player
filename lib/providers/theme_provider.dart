@@ -2,8 +2,17 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 // Provider for SharedPreferences instance
-// Note: This provider is overridden in main.dart with the actual instance
-// Do not use directly without ensuring it's been overridden in ProviderScope
+// Note: This provider MUST be overridden in main.dart with the actual instance
+// Example usage in main.dart:
+//   final prefs = await SharedPreferences.getInstance();
+//   runApp(
+//     ProviderScope(
+//       overrides: [
+//         sharedPrefsProvider.overrideWithValue(prefs),
+//       ],
+//       child: const MyApp(),
+//     ),
+//   );
 final sharedPrefsProvider = Provider<SharedPreferences>((ref) {
   throw UnimplementedError('sharedPrefsProvider must be overridden in main.dart');
 });

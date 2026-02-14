@@ -250,7 +250,10 @@ class _EqualizerScreenState extends State<EqualizerScreen> {
 
   @override
   void dispose() {
-    EqualizerFlutter.release();
+    // Only release if equalizer was successfully initialized
+    if (_isEqualizerAvailable) {
+      EqualizerFlutter.release();
+    }
     super.dispose();
   }
 }

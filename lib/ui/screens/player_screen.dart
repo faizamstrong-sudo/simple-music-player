@@ -199,6 +199,7 @@ class _PlayerScreenState extends ConsumerState<PlayerScreen> {
                           children: [
                             Slider(
                               value: audioState.position.inSeconds.toDouble(),
+                              // Default to 5 minutes if duration unknown (typical song length)
                               max: (audioState.duration?.inSeconds ?? 300).toDouble().clamp(1, double.infinity),
                               onChanged: audioState.duration != null 
                                   ? (value) {
