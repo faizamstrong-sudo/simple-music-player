@@ -15,25 +15,26 @@ class DeezerSearchScreen extends ConsumerStatefulWidget {
 
 class _DeezerSearchScreenState extends ConsumerState<DeezerSearchScreen> {
   final TextEditingController _searchController = TextEditingController();
-  late DeezerService _deezerService;
+  DeezerService? _deezerService;
   
   List<Song> _searchResults = [];
   bool _isLoading = false;
   bool _isPlaying = false;
   String? _playingSongId;
 
-  @override
-  void initState() {
-    super.initState();
-    // Initialize Deezer service with SharedPreferences from provider
-    final prefs = ref.read(sharedPrefsProvider);
-    _deezerService = DeezerService(prefs: prefs);
+  /// Get or initialize the Deezer service
+  DeezerService _getDeezerService() {
+    if (_deezerService == null) {
+      final prefs = ref.read(sharedPrefsProvider);
+      _deezerService = DeezerService(prefs: prefs);
+    }
+    return _deezerService!;
   }
 
   @override
   void dispose() {
     _searchController.dispose();
-    _deezerService.dispose();
+    _deezerService?.dispose();
     super.dispose();
   }
 
@@ -51,7 +52,7 @@ class _DeezerSearchScreenState extends ConsumerState<DeezerSearchScreen> {
     });
 
     try {
-      final results = await _deezerService.searchTracks(query, maxResults: 30);
+      final results = await _getDeezerService().searchTracks(query, maxResults: 30);
       setState(() {
         _searchResults = results;
         _isLoading = false;
@@ -77,7 +78,7 @@ class _DeezerSearchScreenState extends ConsumerState<DeezerSearchScreen> {
 
     try {
       // Find YouTube match (checks cache first, then searches)
-      final youtubeMatch = await _deezerService.findYoutubeMatch(deezerSong);
+      final youtubeMatch = await _getDeezerService().findYoutubeMatch(deezerSong);
       
       if (youtubeMatch == null) {
         _showSnackBar('Tidak dapat menemukan lagu di YouTube', isError: true);
