@@ -12,12 +12,14 @@ class DeezerService {
   
   final SharedPreferences _prefs;
   final YouTubeService _youtubeService;
+  final bool _ownsYoutubeService;
   
   DeezerService({
     required SharedPreferences prefs,
     YouTubeService? youtubeService,
   })  : _prefs = prefs,
-        _youtubeService = youtubeService ?? YouTubeService();
+        _youtubeService = youtubeService ?? YouTubeService(),
+        _ownsYoutubeService = youtubeService == null;
 
   /// Search for tracks on Deezer
   /// Returns a list of songs with Deezer metadata
@@ -149,6 +151,9 @@ class DeezerService {
   }
 
   void dispose() {
-    _youtubeService.dispose();
+    // Only dispose the YouTube service if we created it
+    if (_ownsYoutubeService) {
+      _youtubeService.dispose();
+    }
   }
 }

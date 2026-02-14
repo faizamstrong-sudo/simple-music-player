@@ -90,11 +90,10 @@ class _DeezerSearchScreenState extends ConsumerState<DeezerSearchScreen> {
       }
 
       // Play the song via audio provider
-      await ref.read(audioProvider.notifier).playSong(
-        youtubeMatch,
-        queue: _searchResults,
-        index: _searchResults.indexOf(deezerSong),
-      );
+      // Note: We don't pass the queue here because the queue contains Deezer IDs
+      // which would require YouTube matching for each track during playback.
+      // Users can manually select the next track from the results list.
+      await ref.read(audioProvider.notifier).playSong(youtubeMatch);
 
       setState(() {
         _isPlaying = false;
