@@ -1,0 +1,58 @@
+name: Build FASHIN Play APK
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:  # Allow manual trigger
+
+jobs:
+  build-apk:
+    name: Build Android APK
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+      
+      - name: Setup Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+      
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+      
+      - name: Get Dependencies
+        run: flutter pub get
+      
+      - name: Fix equalizer_flutter namespace
+        run: |
+          EQUALIZER_BUILD_GRADLE=$(find $HOME/.pub-cache/hosted/pub.dev/equalizer_flutter-*/android/build.gradle 2>/dev/null | head -n 1)
+          if [ -f "$EQUALIZER_BUILD_GRADLE" ]; then
+            echo "📍 Found equalizer_flutter at: $EQUALIZER_BUILD_GRADLE"
+            if ! grep -q 'namespace "com.equalizer.flutter"' "$EQUALIZER_BUILD_GRADLE"; then
+              sed -i '0,/android {/s//android {\n    namespace "com.equalizer.flutter"/' "$EQUALIZER_BUILD_GRADLE"
+              echo "✅ Added namespace to equalizer_flutter build.gradle"
+            else
+              echo "ℹ️  Namespace already exists in equalizer_flutter build.gradle"
+            fi
+          else
+            echo "⚠️  equalizer_flutter build.gradle not found in pub cache"
+            echo "The build may succeed if the plugin already has namespace configured"
+          fi
+      
+      - name: Build APK Release
+        run: flutter build apk --release
+      
+      - name: Upload APK Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: FASHIN-Play-APK
+          path: build/app/outputs/flutter-apk/app-release.apk
+          retention-days: 14
