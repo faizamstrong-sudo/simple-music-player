@@ -64,6 +64,9 @@ class YouTubeService {
   // Returns the video ID of the best match, or null if no good match found
   Future<String?> findBestMatch(String title, String artist, Duration? targetDuration) async {
     try {
+      const int maxDurationDifference = 999999; // Maximum initial difference in seconds
+      const int acceptableDurationDiff = 30; // Accept matches within 30 seconds
+      
       // Search with both title and artist for better matching
       final query = '$title $artist';
       final searchResults = await _yt.search.search(query);
@@ -75,13 +78,13 @@ class YouTubeService {
       // If we have target duration, find the closest match
       if (targetDuration != null && targetDuration.inSeconds > 0) {
         String? bestMatch;
-        int smallestDiff = 999999;
+        int smallestDiff = maxDurationDifference;
         
         for (final video in searchResults.take(5)) {
           if (video.duration != null) {
             final diff = (video.duration!.inSeconds - targetDuration.inSeconds).abs();
-            // Accept matches within 30 seconds difference
-            if (diff < smallestDiff && diff <= 30) {
+            // Accept matches within acceptable duration difference
+            if (diff < smallestDiff && diff <= acceptableDurationDiff) {
               smallestDiff = diff;
               bestMatch = video.id.value;
             }

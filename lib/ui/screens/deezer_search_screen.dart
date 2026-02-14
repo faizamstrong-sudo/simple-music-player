@@ -27,9 +27,13 @@ class _DeezerSearchScreenState extends ConsumerState<DeezerSearchScreen> {
   @override
   void initState() {
     super.initState();
+  }
+  
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
     // Initialize DeezerService with SharedPreferences from provider
-    final prefs = ref.read(sharedPrefsProvider);
-    _deezerService = DeezerService(prefs);
+    _deezerService = DeezerService(ref.read(sharedPrefsProvider));
   }
 
   @override
