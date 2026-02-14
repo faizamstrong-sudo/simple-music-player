@@ -60,6 +60,14 @@ class _EqualizerScreenState extends State<EqualizerScreen> {
       setState(() {
         _isEqualizerAvailable = false;
       });
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Gagal menginisialisasi equalizer'),
+            duration: Duration(seconds: 3),
+          ),
+        );
+      }
     }
   }
 
@@ -73,6 +81,14 @@ class _EqualizerScreenState extends State<EqualizerScreen> {
       });
     } catch (e) {
       debugPrint('Error setting band level: $e');
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Gagal mengatur level band'),
+            duration: Duration(seconds: 2),
+          ),
+        );
+      }
     }
   }
 
@@ -81,8 +97,24 @@ class _EqualizerScreenState extends State<EqualizerScreen> {
       await EqualizerFlutter.setPreset(presetName);
       // Refresh band levels
       _initEqualizer();
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Preset "$presetName" diterapkan'),
+            duration: const Duration(seconds: 2),
+          ),
+        );
+      }
     } catch (e) {
       debugPrint('Error setting preset: $e');
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Gagal menerapkan preset'),
+            duration: Duration(seconds: 2),
+          ),
+        );
+      }
     }
   }
 

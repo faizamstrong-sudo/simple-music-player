@@ -19,7 +19,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
   // Indonesian popular songs
   final List<Song> _indoSongs = [
-    Song(id: '1', title: 'Sial', artist: 'Mahalini'),
+    Song(id: '1', title: 'Tak Segampang Itu', artist: 'Anggi Marito'),
     Song(id: '2', title: 'Lathi', artist: 'Weird Genius ft. Sara Fajira'),
     Song(id: '3', title: 'Hanya Satu Persinggahan', artist: 'Tulus'),
     Song(id: '4', title: 'Pilu Membiru', artist: 'Kunto Aji'),
@@ -42,7 +42,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
   // Trending songs (mix)
   final List<Song> _trendingSongs = [
-    Song(id: '16', title: 'Sial', artist: 'Mahalini'),
+    Song(id: '16', title: 'Tak Segampang Itu', artist: 'Anggi Marito'),
     Song(id: '17', title: 'Anti-Hero', artist: 'Taylor Swift'),
     Song(id: '18', title: 'Halu', artist: 'Feby Putri'),
     Song(id: '19', title: 'Blinding Lights', artist: 'The Weeknd'),

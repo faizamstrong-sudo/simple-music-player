@@ -73,7 +73,7 @@ class PlaylistNotifier extends StateNotifier<PlaylistState> {
         description: 'Lagu Indonesia terpopuler 2024',
         isRecommended: true,
         songs: [
-          Song(id: '1', title: 'Sial', artist: 'Mahalini'),
+          Song(id: '1', title: 'Tak Segampang Itu', artist: 'Anggi Marito'),
           Song(id: '2', title: 'Lathi', artist: 'Weird Genius ft. Sara Fajira'),
           Song(id: '3', title: 'Hanya Satu Persinggahan', artist: 'Tulus'),
           Song(id: '4', title: 'Pilu Membiru', artist: 'Kunto Aji'),

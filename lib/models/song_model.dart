@@ -29,15 +29,23 @@ class Song {
 
   // Create from JSON
   factory Song.fromJson(Map<String, dynamic> json) {
+    Duration? parseDuration(dynamic value) {
+      if (value == null) return null;
+      if (value is int) return Duration(seconds: value);
+      if (value is String) {
+        final parsed = int.tryParse(value);
+        return parsed != null ? Duration(seconds: parsed) : null;
+      }
+      return null;
+    }
+
     return Song(
       id: json['id'] as String,
       title: json['title'] as String,
       artist: json['artist'] as String,
       albumArt: json['albumArt'] as String?,
       youtubeUrl: json['youtubeUrl'] as String?,
-      duration: json['duration'] != null 
-          ? Duration(seconds: json['duration'] as int)
-          : null,
+      duration: parseDuration(json['duration']),
     );
   }
 

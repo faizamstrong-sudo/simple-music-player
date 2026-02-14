@@ -61,9 +61,10 @@ class LyricsService {
     }
   }
 
-  // Parse LRC format
+  // Parse LRC format (e.g., "[00:12.50]Lyrics text" -> timestamp + text)
   List<LyricsLine> _parseLRC(String lrcContent) {
     final lines = <LyricsLine>[];
+    // LRC format: [MM:SS.mmm]text where MM=minutes, SS=seconds, mmm=milliseconds
     final lrcPattern = RegExp(r'\[(\d{2}):(\d{2})\.(\d{2,3})\](.*)');
     
     for (final line in lrcContent.split('\n')) {

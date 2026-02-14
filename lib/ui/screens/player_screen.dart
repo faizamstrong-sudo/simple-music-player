@@ -199,10 +199,12 @@ class _PlayerScreenState extends ConsumerState<PlayerScreen> {
                           children: [
                             Slider(
                               value: audioState.position.inSeconds.toDouble(),
-                              max: (audioState.duration?.inSeconds ?? 0).toDouble().clamp(1, double.infinity),
-                              onChanged: (value) {
-                                audioNotifier.seek(Duration(seconds: value.toInt()));
-                              },
+                              max: (audioState.duration?.inSeconds ?? 300).toDouble().clamp(1, double.infinity),
+                              onChanged: audioState.duration != null 
+                                  ? (value) {
+                                      audioNotifier.seek(Duration(seconds: value.toInt()));
+                                    }
+                                  : null, // Disable slider when duration unavailable
                             ),
                             Padding(
                               padding: const EdgeInsets.symmetric(horizontal: 8),
