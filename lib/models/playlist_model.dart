@@ -1,109 +1,57 @@
-import 'dart:convert';
+import 'song_model.dart';
 
-class PlaylistEntry {
-  final String path;
-  final DateTime dateAdded;
-  // METADATA CACHE (For streamed/missing songs)
-  final String? title;
-  final String? artist;
-  final String? album;
-  final String? artUrl;
-  final String? sourceUrl;
-  final String? isrc; // 🚀 ADD ISRC
-  final int? duration; // 🚀 ADD DURATION (Seconds)
-
-  PlaylistEntry({
-    required this.path,
-    required this.dateAdded,
-    this.title,
-    this.artist,
-    this.album,
-    this.artUrl,
-    this.sourceUrl,
-    this.isrc,
-    this.duration,
-  });
-
-  Map<String, dynamic> toMap() => {
-        'path': path,
-        'dateAdded': dateAdded.millisecondsSinceEpoch,
-        'title': title,
-        'artist': artist,
-        'album': album,
-        'artUrl': artUrl,
-        'sourceUrl': sourceUrl,
-        'isrc': isrc,
-        'duration': duration,
-      };
-
-  factory PlaylistEntry.fromMap(Map<String, dynamic> map) {
-    return PlaylistEntry(
-      path: map['path'] ?? '',
-      dateAdded: DateTime.fromMillisecondsSinceEpoch(map['dateAdded'] ?? 0),
-      title: map['title'],
-      artist: map['artist'],
-      album: map['album'],
-      artUrl: map['artUrl'],
-      sourceUrl: map['sourceUrl'],
-      isrc: map['isrc'],
-      duration: map['duration'],
-    );
-  }
-}
-
-class PlaylistModel {
+class Playlist {
   final String id;
   final String name;
-  final List<PlaylistEntry> entries; // Changed from List<String>
-  final DateTime createdAt;
-  final String? coverUrl; // 🚀 For Spotify imported playlists
+  final String? description;
+  final List<Song> songs;
+  final bool isRecommended;
 
-  PlaylistModel({
+  Playlist({
     required this.id,
     required this.name,
-    required this.entries,
-    required this.createdAt,
-    this.coverUrl,
+    this.description,
+    required this.songs,
+    this.isRecommended = false,
   });
 
-  Map<String, dynamic> toMap() {
+  // Convert to JSON for storage
+  Map<String, dynamic> toJson() {
     return {
       'id': id,
       'name': name,
-      'entries': entries.map((x) => x.toMap()).toList(),
-      'createdAt': createdAt.millisecondsSinceEpoch,
-      'coverUrl': coverUrl,
+      'description': description,
+      'songs': songs.map((song) => song.toJson()).toList(),
+      'isRecommended': isRecommended,
     };
   }
 
-  factory PlaylistModel.fromMap(Map<String, dynamic> map) {
-    return PlaylistModel(
-      id: map['id'] ?? '',
-      name: map['name'] ?? 'Unknown',
-      entries: List<PlaylistEntry>.from(
-        (map['entries'] ?? []).map((x) => PlaylistEntry.fromMap(x)),
-      ),
-      createdAt: DateTime.fromMillisecondsSinceEpoch(map['createdAt'] ?? 0),
-      coverUrl: map['coverUrl'],
+  // Create from JSON
+  factory Playlist.fromJson(Map<String, dynamic> json) {
+    return Playlist(
+      id: json['id'] as String,
+      name: json['name'] as String,
+      description: json['description'] as String?,
+      songs: (json['songs'] as List<dynamic>)
+          .map((songJson) => Song.fromJson(songJson as Map<String, dynamic>))
+          .toList(),
+      isRecommended: json['isRecommended'] as bool? ?? false,
     );
   }
 
-  String toJson() => json.encode(toMap());
-
-  factory PlaylistModel.fromJson(String source) =>
-      PlaylistModel.fromMap(json.decode(source));
-
-  PlaylistModel copyWith({
+  Playlist copyWith({
+    String? id,
     String? name,
-    List<PlaylistEntry>? entries,
-    String? coverUrl,
+    String? description,
+    List<Song>? songs,
+    bool? isRecommended,
   }) {
-    return PlaylistModel(
-      id: id,
+    return Playlist(
+      id: id ?? this.id,
       name: name ?? this.name,
-      entries: entries ?? this.entries,
-      createdAt: createdAt,
-      coverUrl: coverUrl ?? this.coverUrl,
+      description: description ?? this.description,
+      songs: songs ?? this.songs,
+      isRecommended: isRecommended ?? this.isRecommended,
     );
   }
 }
