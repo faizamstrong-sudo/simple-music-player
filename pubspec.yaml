@@ -1,4 +1,4 @@
-name: simple_music_player_2
+name: fashin_play
 description: "FASHIN Play - A simple mobile music player."
 publish_to: 'none'
 version: 1.0.0+1
@@ -16,7 +16,6 @@ dependencies:
   # Audio
   just_audio: ^0.9.36
   audio_service: ^0.18.12
-  equalizer_flutter: ^0.0.1
 
   # Tools
   shared_preferences: ^2.2.2
@@ -24,7 +23,6 @@ dependencies:
 
   # Parsing HTTP
   http: ^1.0.0
-  html: ^0.15.0
 
   # UI
   google_fonts: ^6.1.0
@@ -33,7 +31,7 @@ dependencies:
   youtube_explode_dart: ^2.5.0
 
   # Utilities
-  intl: 0.20.2
+  intl: ^0.19.0
 
 dev_dependencies:
   flutter_test:
