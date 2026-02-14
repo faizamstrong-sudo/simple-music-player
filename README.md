@@ -49,6 +49,7 @@
 - **Automatic Metadata**: Tags downloaded files with correct artist, title, and album art from Spotify
 - **Import Spotify Playlist**: Paste your Spotify playlist link to import the entire playlist. Stream or download all tracks directly from the app
 - **FLAC Streaming and Download**: You can stream or download all songs with lossless quality if available. (Just adjust your settings preferences)
+- **Deezer Search Integration**: Search music metadata from Deezer and play audio via YouTube streams with intelligent caching (see [DEEZER.md](docs/DEEZER.md))
 
 ### 📊 **Statistics & History**
 - **Play Statistics**: Track your listening habits with detailed stats
