@@ -77,7 +77,7 @@ class _EqualizerScreenState extends State<EqualizerScreen> {
                       const SizedBox(width: 12),
                       Expanded(
                         child: Text(
-                          'Equalizer UI mockup - Pilih preset atau sesuaikan frequency bands',
+                          'Equalizer UI mockup - Pilih preset atau sesuaikan band frekuensi',
                           style: theme.textTheme.bodyMedium?.copyWith(
                             color: colorScheme.onPrimaryContainer,
                           ),
