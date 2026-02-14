@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 import '../models/song_model.dart';
 
@@ -24,7 +25,7 @@ class YouTubeService {
 
       return songs;
     } catch (e) {
-      print('Error searching YouTube: $e');
+      debugPrint('Error searching YouTube: $e');
       return [];
     }
   }
@@ -36,7 +37,7 @@ class YouTubeService {
       final audioStream = manifest.audioOnly.withHighestBitrate();
       return audioStream.url.toString();
     } catch (e) {
-      print('Error getting audio stream: $e');
+      debugPrint('Error getting audio stream: $e');
       return null;
     }
   }
@@ -54,7 +55,7 @@ class YouTubeService {
         duration: video.duration,
       );
     } catch (e) {
-      print('Error getting video details: $e');
+      debugPrint('Error getting video details: $e');
       return null;
     }
   }

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:just_audio/just_audio.dart';
 import '../models/song_model.dart';
@@ -79,7 +80,7 @@ class AudioNotifier extends StateNotifier<AudioState> {
       await _audioService.playSong(song);
       state = state.copyWith(currentSong: song);
     } catch (e) {
-      print('Error playing song: $e');
+      debugPrint('Error playing song: $e');
     }
   }
 

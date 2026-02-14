@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../models/playlist_model.dart';
@@ -47,7 +48,7 @@ class PlaylistNotifier extends StateNotifier<PlaylistState> {
         state = state.copyWith(userPlaylists: playlists);
       }
     } catch (e) {
-      print('Error loading playlists: $e');
+      debugPrint('Error loading playlists: $e');
     }
   }
 
@@ -59,7 +60,7 @@ class PlaylistNotifier extends StateNotifier<PlaylistState> {
       );
       await _prefs.setString('user_playlists', playlistsJson);
     } catch (e) {
-      print('Error saving playlists: $e');
+      debugPrint('Error saving playlists: $e');
     }
   }
 

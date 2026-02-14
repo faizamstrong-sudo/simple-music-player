@@ -56,7 +56,7 @@ class _EqualizerScreenState extends State<EqualizerScreen> {
         });
       }
     } catch (e) {
-      print('Error initializing equalizer: $e');
+      debugPrint('Error initializing equalizer: $e');
       setState(() {
         _isEqualizerAvailable = false;
       });
@@ -72,7 +72,7 @@ class _EqualizerScreenState extends State<EqualizerScreen> {
         }
       });
     } catch (e) {
-      print('Error setting band level: $e');
+      debugPrint('Error setting band level: $e');
     }
   }
 
@@ -82,7 +82,7 @@ class _EqualizerScreenState extends State<EqualizerScreen> {
       // Refresh band levels
       _initEqualizer();
     } catch (e) {
-      print('Error setting preset: $e');
+      debugPrint('Error setting preset: $e');
     }
   }
 
