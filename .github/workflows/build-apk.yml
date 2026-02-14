@@ -31,12 +31,16 @@ jobs:
       
       - name: Fix equalizer_flutter namespace
         run: |
-          EQUALIZER_BUILD_GRADLE="$HOME/.pub-cache/hosted/pub.dev/equalizer_flutter-0.0.1/android/build.gradle"
+          EQUALIZER_BUILD_GRADLE=$(find $HOME/.pub-cache/hosted/pub.dev/equalizer_flutter-*/android/build.gradle 2>/dev/null | head -n 1)
           if [ -f "$EQUALIZER_BUILD_GRADLE" ]; then
-            sed -i 's/android {/android {\n    namespace "com.equalizer.flutter"/' "$EQUALIZER_BUILD_GRADLE"
-            echo "✅ Added namespace to equalizer_flutter build.gradle"
+            if ! grep -q 'namespace "com.equalizer.flutter"' "$EQUALIZER_BUILD_GRADLE"; then
+              sed -i 's/android {/android {\n    namespace "com.equalizer.flutter"/' "$EQUALIZER_BUILD_GRADLE"
+              echo "✅ Added namespace to equalizer_flutter build.gradle"
+            else
+              echo "ℹ️  Namespace already exists in equalizer_flutter build.gradle"
+            fi
           else
-            echo "⚠️  equalizer_flutter build.gradle not found at expected location"
+            echo "⚠️  equalizer_flutter build.gradle not found"
           fi
       
       - name: Build APK Release
